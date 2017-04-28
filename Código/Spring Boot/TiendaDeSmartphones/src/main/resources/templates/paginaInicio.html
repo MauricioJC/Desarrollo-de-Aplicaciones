@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Inicio</title>
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="css/sweetalert.css"/>
+
+    <script>
+        /*$(function () {
+            $.post("/usuario/crear",
+                {correo:"hayley",
+                contraseña:"123456"},
+                function () {
+                    swal("Titulo","Contexto","success");
+                });
+
+        });*/
+
+        $(document).ready(function () {
+            $("#validar").click(function () {
+                $.post("/usuario/validar",
+                    {correo:"hayley",
+                    contraseña:"123456"},
+                    function (data) {
+                        swal("Titulo","Contexto","success");
+                        $("#result").html(data);
+                    });
+            });
+        });
+
+
+        /*$("#validar").click(function () {
+            swal("Titulo","Contexto","error");
+            $.post("/usuario/validar",
+                {correo:"hayley",
+                contraseña:"123456"},
+                function (data) {
+                    $("#result").html(data);
+                    swal("Titulo","Contexto","success");
+                }
+            );
+        });*/
+
+    </script>
+
+</head>
+<body>
+
+<button id="validar">Validar</button>
+<p id="result">Resultado es: </p>
+
+</body>
+</html>
