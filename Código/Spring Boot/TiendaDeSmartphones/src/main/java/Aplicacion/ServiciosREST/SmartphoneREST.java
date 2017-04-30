@@ -3,10 +3,7 @@ package Aplicacion.ServiciosREST;
 import Aplicacion.Modelos.SmartphoneEntity;
 import Aplicacion.Repository.SmartphoneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
@@ -26,5 +23,11 @@ public class SmartphoneREST {
     @RequestMapping(value = "/smartphone/id/{idSmartphone}", method = RequestMethod.GET)
     public SmartphoneEntity buscarSmartPhonePorID(@PathVariable("idSmartphone") Integer idSmartphone){
         return this.smartphoneRepository.findByIdSmartphone(idSmartphone);
+    }
+
+    @RequestMapping(value = "/smartphone/guardar", method = RequestMethod.POST)
+    public boolean guardarSmartphone(@RequestBody  SmartphoneEntity smartphoneEntity){
+        this.smartphoneRepository.save(smartphoneEntity);
+        return true;
     }
 }

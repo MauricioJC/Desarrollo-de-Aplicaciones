@@ -18,7 +18,7 @@
 
         });*/
 
-        $(document).ready(function () {
+        /*$(document).ready(function () {
             $("#validar").click(function () {
                 $.post("/usuario/validar",
                     {correo:"hayley",
@@ -28,7 +28,7 @@
                         $("#result").html(data);
                     });
             });
-        });
+        });*/
 
         /*$("#validar").click(function () {
             swal("Titulo","Contexto","error");
@@ -41,6 +41,42 @@
                 }
             );
         });*/
+
+        $(document).ready(function () {
+            $("#validar").click(function () {
+                var datos = {
+                    "idSmartphone":1,
+                    "marca":"Samsung",
+                    "modelo":"Galaxy note II",
+                    "descripcion":"2 GB RAM",
+                    "color":"Negro",
+                    "precio":4000,
+                    "cantidad":"10"
+                };
+                var Smartphone = JSON.stringify(datos);
+                console.log(Smartphone);
+
+                $.ajax({
+                    url: '/smartphone/guardar',
+                    data: JSON.stringify(datos),
+                    type: "POST",
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader("Accept", "application/json");
+                        xhr.setRequestHeader("Content-Type", "application/json");
+                    },
+                    success: function(data){
+                        alert(data);
+                    }
+                });
+
+                /*$.post("/smartphone/guardar",
+                    Smartphone,
+                    function (data) {
+                        swal("Titulo","Contexto","success");
+                        $("#result").html(data);
+                 });*/
+            });
+        });
 
     </script>
 
