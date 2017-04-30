@@ -30,4 +30,10 @@ public class SmartphoneREST {
         this.smartphoneRepository.save(smartphoneEntity);
         return true;
     }
+
+    @RequestMapping(value = "/smartphone/eliminar", method = RequestMethod.POST)
+    public boolean crearUsuario(@RequestParam("id")Integer id){
+        this.smartphoneRepository.delete(id);
+        return true;
+    }
 }
