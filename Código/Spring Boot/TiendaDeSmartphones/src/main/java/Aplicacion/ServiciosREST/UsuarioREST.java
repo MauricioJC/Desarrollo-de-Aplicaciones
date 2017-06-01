@@ -1,12 +1,10 @@
 package Aplicacion.ServiciosREST;
 
+import Aplicacion.Modelos.SmartphoneEntity;
 import Aplicacion.Modelos.UsuarioEntity;
 import Aplicacion.Repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Creado por Mauricio el 27/04/2017.
@@ -17,12 +15,14 @@ public class UsuarioREST {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @CrossOrigin
     @RequestMapping(value = "/usuario/crear", method = RequestMethod.POST)
     public boolean crearUsuario(@RequestParam("correo")String correo, @RequestParam("contraseña")String contraseña){
         usuarioRepository.save(new UsuarioEntity(correo,contraseña));
         return true;
     }
 
+    @CrossOrigin
     @RequestMapping(value = "/usuario/validar", method = RequestMethod.POST)
     public Integer validarUsuario(@RequestParam("correo")String correo, @RequestParam("contraseña")String contraseña){
         UsuarioEntity usuarioEntity = this.usuarioRepository.findByCorreoAndContraseña(correo,contraseña);
@@ -31,5 +31,13 @@ public class UsuarioREST {
         }else {
             return usuarioEntity.getIdUsuario();
         }
+    }
+
+    //Este acepta JSON
+    @CrossOrigin
+    @RequestMapping(value = "/usuario/guardar", method = RequestMethod.POST)
+    public boolean guardarSmartphone(@RequestBody UsuarioEntity usuarioEntity){
+        this.usuarioRepository.save(usuarioEntity);
+        return true;
     }
 }

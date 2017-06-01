@@ -15,11 +15,13 @@ public class SmartphoneREST {
     @Autowired
     private SmartphoneRepository smartphoneRepository;
 
+    @CrossOrigin
     @RequestMapping(value = "/smartphone/lista", method = RequestMethod.GET)
     public ArrayList<SmartphoneEntity> obtenerListaDeSmartphone(){
         return (ArrayList<SmartphoneEntity>) this.smartphoneRepository.findAll();
     }
 
+    @CrossOrigin
     @RequestMapping(value = "/smartphone/id/{idSmartphone}", method = RequestMethod.GET)
     public SmartphoneEntity buscarSmartPhonePorID(@PathVariable("idSmartphone") Integer idSmartphone){
         return this.smartphoneRepository.findByIdSmartphone(idSmartphone);
