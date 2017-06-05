@@ -24,4 +24,19 @@ public class templateController {
     public String obtenerPaginaSmartphones(){
         return "paginaSmartphones";
     }
+
+    @RequestMapping(value = "ventas", method = RequestMethod.GET)
+    public String obtenerPaginaVentas(){
+        return "paginaVentas";
+    }
+
+    @RequestMapping(value = "traspasos", method = RequestMethod.GET)
+    public String obtenerPaginaDeTraspasos(){
+        return "paginaTraspasos";
+    }
+
+    @RequestMapping(value = "reservaciones", method = RequestMethod.GET)
+    public String obtenerPaginaDeReservaciones(){
+        return "paginaReservaciones";
+    }
 }
