@@ -34,7 +34,7 @@ public class SmartphoneREST {
     }
 
     @RequestMapping(value = "/smartphone/eliminar", method = RequestMethod.POST)
-    public boolean crearUsuario(@RequestParam("id")Integer id){
+    public boolean eliminarSmartphone(@RequestParam("id")Integer id){
         this.smartphoneRepository.delete(id);
         return true;
     }
