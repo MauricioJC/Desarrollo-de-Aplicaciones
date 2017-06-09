@@ -1,0 +1,389 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.3.16
+-- Dumped by pg_dump version 9.3.16
+-- Started on 2017-06-07 22:30:55
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- TOC entry 1 (class 3079 OID 11750)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 1991 (class 0 OID 0)
+-- Dependencies: 1
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+--
+-- TOC entry 177 (class 1259 OID 16690)
+-- Name: reservacion_sec; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE reservacion_sec
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.reservacion_sec OWNER TO postgres;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 178 (class 1259 OID 16692)
+-- Name: reservacion; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE reservacion (
+    id_reservacion integer DEFAULT nextval('reservacion_sec'::regclass) NOT NULL,
+    id_smartphone integer NOT NULL,
+    id_usuario integer NOT NULL,
+    fecha date NOT NULL
+);
+
+
+ALTER TABLE public.reservacion OWNER TO postgres;
+
+--
+-- TOC entry 171 (class 1259 OID 16656)
+-- Name: smartphone_sec; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE smartphone_sec
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.smartphone_sec OWNER TO postgres;
+
+--
+-- TOC entry 172 (class 1259 OID 16658)
+-- Name: smartphone; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE smartphone (
+    id_smartphone integer DEFAULT nextval('smartphone_sec'::regclass) NOT NULL,
+    marca character varying(60) NOT NULL,
+    modelo character varying(60) NOT NULL,
+    descripcion character varying(100) NOT NULL,
+    color character varying(60) NOT NULL,
+    precio integer NOT NULL,
+    cantidad integer NOT NULL
+);
+
+
+ALTER TABLE public.smartphone OWNER TO postgres;
+
+--
+-- TOC entry 179 (class 1259 OID 16698)
+-- Name: traspaso_sec; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE traspaso_sec
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.traspaso_sec OWNER TO postgres;
+
+--
+-- TOC entry 180 (class 1259 OID 16700)
+-- Name: traspaso; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE traspaso (
+    id_traspaso integer DEFAULT nextval('traspaso_sec'::regclass) NOT NULL,
+    id_smartphone integer NOT NULL,
+    tipo character varying(40) NOT NULL,
+    fecha date NOT NULL
+);
+
+
+ALTER TABLE public.traspaso OWNER TO postgres;
+
+--
+-- TOC entry 173 (class 1259 OID 16664)
+-- Name: usuario_sec; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE usuario_sec
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.usuario_sec OWNER TO postgres;
+
+--
+-- TOC entry 174 (class 1259 OID 16666)
+-- Name: usuario; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE usuario (
+    id_usuario integer DEFAULT nextval('usuario_sec'::regclass) NOT NULL,
+    correo character varying(60) NOT NULL,
+    "contraseña" character varying(60) NOT NULL
+);
+
+
+ALTER TABLE public.usuario OWNER TO postgres;
+
+--
+-- TOC entry 175 (class 1259 OID 16672)
+-- Name: venta_sec; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE venta_sec
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.venta_sec OWNER TO postgres;
+
+--
+-- TOC entry 176 (class 1259 OID 16674)
+-- Name: venta; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE venta (
+    id_venta integer DEFAULT nextval('venta_sec'::regclass) NOT NULL,
+    id_smartphone integer NOT NULL,
+    id_usuario integer NOT NULL,
+    fecha date NOT NULL
+);
+
+
+ALTER TABLE public.venta OWNER TO postgres;
+
+--
+-- TOC entry 1981 (class 0 OID 16692)
+-- Dependencies: 178
+-- Data for Name: reservacion; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO reservacion VALUES (1, 2, 1, '2017-05-31');
+
+
+--
+-- TOC entry 1992 (class 0 OID 0)
+-- Dependencies: 177
+-- Name: reservacion_sec; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('reservacion_sec', 1, true);
+
+
+--
+-- TOC entry 1975 (class 0 OID 16658)
+-- Dependencies: 172
+-- Data for Name: smartphone; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO smartphone VALUES (1, 'Lenovo', 'K6', '2 GB RAM', 'Gris', 3300, 16);
+INSERT INTO smartphone VALUES (2, 'Huawei', 'Y625', '8 GB', 'Dorado', 2200, 10);
+
+
+--
+-- TOC entry 1993 (class 0 OID 0)
+-- Dependencies: 171
+-- Name: smartphone_sec; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('smartphone_sec', 2, true);
+
+
+--
+-- TOC entry 1983 (class 0 OID 16700)
+-- Dependencies: 180
+-- Data for Name: traspaso; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO traspaso VALUES (1, 1, 'Enviado', '2017-06-01');
+
+
+--
+-- TOC entry 1994 (class 0 OID 0)
+-- Dependencies: 179
+-- Name: traspaso_sec; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('traspaso_sec', 1, true);
+
+
+--
+-- TOC entry 1977 (class 0 OID 16666)
+-- Dependencies: 174
+-- Data for Name: usuario; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO usuario VALUES (1, 'hayley_3612@gmail.com', 'asdfghjkl');
+
+
+--
+-- TOC entry 1995 (class 0 OID 0)
+-- Dependencies: 173
+-- Name: usuario_sec; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('usuario_sec', 1, true);
+
+
+--
+-- TOC entry 1979 (class 0 OID 16674)
+-- Dependencies: 176
+-- Data for Name: venta; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO venta VALUES (1, 1, 1, '2017-06-07');
+
+
+--
+-- TOC entry 1996 (class 0 OID 0)
+-- Dependencies: 175
+-- Name: venta_sec; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('venta_sec', 1, true);
+
+
+--
+-- TOC entry 1859 (class 2606 OID 16697)
+-- Name: reservacion_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY reservacion
+    ADD CONSTRAINT reservacion_pkey PRIMARY KEY (id_reservacion);
+
+
+--
+-- TOC entry 1853 (class 2606 OID 16663)
+-- Name: smartphone_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY smartphone
+    ADD CONSTRAINT smartphone_pkey PRIMARY KEY (id_smartphone);
+
+
+--
+-- TOC entry 1861 (class 2606 OID 16705)
+-- Name: traspaso_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY traspaso
+    ADD CONSTRAINT traspaso_pkey PRIMARY KEY (id_traspaso);
+
+
+--
+-- TOC entry 1855 (class 2606 OID 16671)
+-- Name: usuario_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY usuario
+    ADD CONSTRAINT usuario_pkey PRIMARY KEY (id_usuario);
+
+
+--
+-- TOC entry 1857 (class 2606 OID 16679)
+-- Name: venta_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY venta
+    ADD CONSTRAINT venta_pkey PRIMARY KEY (id_venta);
+
+
+--
+-- TOC entry 1864 (class 2606 OID 16711)
+-- Name: reservacion_id_smartphone_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY reservacion
+    ADD CONSTRAINT reservacion_id_smartphone_fkey FOREIGN KEY (id_smartphone) REFERENCES smartphone(id_smartphone) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- TOC entry 1865 (class 2606 OID 16716)
+-- Name: reservacion_id_usuario_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY reservacion
+    ADD CONSTRAINT reservacion_id_usuario_fkey FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- TOC entry 1866 (class 2606 OID 16706)
+-- Name: traspaso_id_smartphone_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY traspaso
+    ADD CONSTRAINT traspaso_id_smartphone_fkey FOREIGN KEY (id_smartphone) REFERENCES smartphone(id_smartphone) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- TOC entry 1862 (class 2606 OID 16680)
+-- Name: venta_id_smartphone_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY venta
+    ADD CONSTRAINT venta_id_smartphone_fkey FOREIGN KEY (id_smartphone) REFERENCES smartphone(id_smartphone) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- TOC entry 1863 (class 2606 OID 16685)
+-- Name: venta_id_usuario_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY venta
+    ADD CONSTRAINT venta_id_usuario_fkey FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- TOC entry 1990 (class 0 OID 0)
+-- Dependencies: 6
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+-- Completed on 2017-06-07 22:30:55
+
+--
+-- PostgreSQL database dump complete
+--
+

@@ -36,7 +36,7 @@ public class UsuarioREST {
     //Este acepta JSON
     @CrossOrigin
     @RequestMapping(value = "/usuario/guardar", method = RequestMethod.POST)
-    public boolean guardarSmartphone(@RequestBody UsuarioEntity usuarioEntity){
+    public boolean guardarUsuario(@RequestBody UsuarioEntity usuarioEntity){
         this.usuarioRepository.save(usuarioEntity);
         return true;
     }

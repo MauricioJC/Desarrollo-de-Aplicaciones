@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50718
 File Encoding         : 65001
 
-Date: 2017-04-27 23:53:09
+Date: 2017-06-08 22:00:10
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -23,15 +23,13 @@ CREATE TABLE `reservacion` (
   `id_reservacion` int(11) NOT NULL AUTO_INCREMENT,
   `id_usuario` int(11) NOT NULL,
   `id_smartphone` int(11) NOT NULL,
-  `folio` varchar(20) NOT NULL,
   `fecha` date NOT NULL,
-  `estado` varchar(40) NOT NULL,
   PRIMARY KEY (`id_reservacion`),
   KEY `id_usuario` (`id_usuario`),
   KEY `id_smartphone` (`id_smartphone`),
   CONSTRAINT `reservacion_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `reservacion_ibfk_2` FOREIGN KEY (`id_smartphone`) REFERENCES `smartphone` (`id_smartphone`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for smartphone
@@ -46,7 +44,7 @@ CREATE TABLE `smartphone` (
   `precio` int(11) NOT NULL,
   `cantidad` int(11) NOT NULL,
   PRIMARY KEY (`id_smartphone`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for traspaso
@@ -56,12 +54,11 @@ CREATE TABLE `traspaso` (
   `id_traspaso` int(11) NOT NULL AUTO_INCREMENT,
   `id_smartphone` int(11) NOT NULL,
   `tipo` varchar(40) NOT NULL,
-  `estado` varchar(40) NOT NULL,
   `fecha` date NOT NULL,
   PRIMARY KEY (`id_traspaso`),
   KEY `id_smartphone` (`id_smartphone`),
   CONSTRAINT `traspaso_ibfk_1` FOREIGN KEY (`id_smartphone`) REFERENCES `smartphone` (`id_smartphone`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for usuario
@@ -72,7 +69,7 @@ CREATE TABLE `usuario` (
   `correo` varchar(60) NOT NULL,
   `contraseña` varchar(60) NOT NULL,
   PRIMARY KEY (`id_usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for venta
@@ -88,4 +85,4 @@ CREATE TABLE `venta` (
   KEY `id_usuario` (`id_usuario`),
   CONSTRAINT `venta_ibfk_1` FOREIGN KEY (`id_smartphone`) REFERENCES `smartphone` (`id_smartphone`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `venta_ibfk_2` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
