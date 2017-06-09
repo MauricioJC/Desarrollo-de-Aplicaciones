@@ -3,9 +3,6 @@
     package="da.miguel.cliente_movil">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -26,7 +23,11 @@
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" />
         <activity android:name=".CatalogoSmartphones" />
-        <activity android:name=".InformacionSmartphone"></activity>
+        <activity android:name=".InformacionSmartphone" />
+        <activity
+            android:name=".Registro"
+            android:label="@string/title_activity_registro"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

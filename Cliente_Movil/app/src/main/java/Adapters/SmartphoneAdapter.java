@@ -44,20 +44,24 @@ public class SmartphoneAdapter extends BaseAdapter {
         return position;
     }
 
+
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
         if(convertView == null){
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.activity_informacion_smartphone,null);
+            convertView = layoutInflater.inflate(R.layout.layout_smartphone,parent,false);
         }
 
-        TextView modelo = (TextView) convertView.findViewById(R.id.TVModelo);
-        TextView precio = (TextView) convertView.findViewById(R.id.TVPrecio);
+        TextView modelo = (TextView) convertView.findViewById(R.id.textModelo);
+        TextView precio = (TextView) convertView.findViewById(R.id.textPrecio);
+        TextView marca = (TextView) convertView.findViewById(R.id.textMarca);
 
         modelo.setText(arrayList.get(position).getModelo());
-        precio.setText(arrayList.get(position).getPrecio());
-        return null;
+        precio.setText("$ "+Integer.toString(arrayList.get(position).getPrecio()));
+        marca.setText(arrayList.get(position).getMarca());
+        return convertView;
     }
 
     /*public SmartphoneAdapter(Context context, int resource, List<Smartphone> objects){

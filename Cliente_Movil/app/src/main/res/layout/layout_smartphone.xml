@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="202dp"
+        android:id="@+id/textModelo"
+        android:text="Modelo"
+        android:paddingLeft="16dp"
+        android:textColor="@android:color/black"
+        android:textSize="20dp"/>
+
+    <TextView
+        android:id="@+id/textMarca"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Marca"
+        android:paddingLeft="16dp"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="16dp" />
+    </LinearLayout>
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textPrecio"
+        android:textSize="22dp"
+        android:text="Precio"
+        android:paddingLeft="60dp"
+        android:paddingTop="9dp"
+        />
+
+
+</LinearLayout>

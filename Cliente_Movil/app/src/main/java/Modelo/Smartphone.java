@@ -1,10 +1,13 @@
 package Modelo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by nosel_000 on 31/05/2017.
  */
 
-public class Smartphone {
+public class Smartphone implements Parcelable {
 
     private int id_smartphone;
     private String marca;
@@ -18,6 +21,15 @@ public class Smartphone {
 
     }
 
+    public Smartphone(Parcel in) {
+        this.id_smartphone = in.readInt();
+        this.modelo = in.readString();
+        this.marca = in.readString();
+        this.color = in.readString();
+        this.descripcion = in.readString();
+        this.precio = in.readInt();
+        this.cantidad = in.readInt();
+    }
 
     public String getMarca() {
         return marca;
@@ -74,4 +86,41 @@ public class Smartphone {
     public void setId_smartphone(int id_smartphone) {
         this.id_smartphone = id_smartphone;
     }
+
+    public void readFromParcel(Parcel in){
+        id_smartphone = in.readInt();
+        modelo = in.readString();
+        marca = in.readString();
+        color = in.readString();
+        descripcion = in.readString();
+        precio = in.readInt();
+        cantidad = in.readInt();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id_smartphone);
+        dest.writeString(modelo);
+        dest.writeString(marca);
+        dest.writeString(color);
+        dest.writeString(descripcion);
+        dest.writeInt(precio);
+        dest.writeInt(cantidad);
+    }
+    public static final Parcelable.Creator CREATOR = new Creator<Smartphone>() {
+        @Override
+        public Smartphone createFromParcel(Parcel source) {
+            return new Smartphone(source);
+        }
+
+        @Override
+        public Smartphone[] newArray(int size) {
+            return new Smartphone[size];
+        }
+    };
 }

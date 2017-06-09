@@ -1,5 +1,6 @@
 package da.miguel.cliente_movil;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -13,6 +14,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,13 +37,16 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Objects;
 
 public class InicioSesion extends AppCompatActivity {
     private EditText campoPassword;
     private AutoCompleteTextView campoEmail;
     private IniciarSesionTask inicioSesion = null;
+    public static final String URL_IP = "http://192.168.1.73:8080";
 
 
     @Override
@@ -52,19 +64,23 @@ public class InicioSesion extends AppCompatActivity {
                 iniciarSesion();
             }
         });
+
+
         Button btnRegistrar = (Button) findViewById(R.id.btnRegistrar);
 
         btnRegistrar.setOnClickListener( new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
-                mostrarCatalogo(v);
+                Intent i = new Intent(InicioSesion.this, Registro.class);
+                startActivity(i);
             }
         });
     }
 
-    public void mostrarCatalogo(View view){
+    public void mostrarCatalogo(int id){
         Intent i = new Intent(this, CatalogoSmartphones.class);
+        i.putExtra("id", id);
         startActivity(i);
     }
 
@@ -107,7 +123,7 @@ public class InicioSesion extends AppCompatActivity {
                 // form field with an error.
                 focusView.requestFocus();
             } else {
-                inicioSesion = new IniciarSesionTask(correo, contrasena);
+                inicioSesion = new IniciarSesionTask(correo, contrasena,this);
                 inicioSesion.execute((String) null);
             }
         }
@@ -119,19 +135,24 @@ public class InicioSesion extends AppCompatActivity {
 
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() > 6;
+        return password.length() >= 6;
     }
 
     public class IniciarSesionTask extends AsyncTask<String, Void, String>{
         private final String email;
         private final String password;
+        private RequestQueue rqt;
+        private String url = URL_IP + "/usuario/validar";
+        private StringRequest srqt;
+        private Context context;
 
-        public IniciarSesionTask(String email, String password) {
+        public IniciarSesionTask(String email, String password, Context ctx ) {
             this.email = email;
             this.password = password;
+            this.context = ctx;
         }
 
-        public String getPostDataString(JSONObject params){
+        /*public String getPostDataString(JSONObject params){
             StringBuilder resultado = new StringBuilder();
             boolean primero = true;
             Iterator<String> itr = params.keys();
@@ -158,11 +179,47 @@ public class InicioSesion extends AppCompatActivity {
 
             }
             return resultado.toString();
-        }
+        }*/
 
         @Override
         protected String doInBackground(String... params) {
-            try {
+
+            rqt = Volley.newRequestQueue(context);
+            srqt = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.d("rta_servidor", response);
+                            int id = Integer.parseInt(response);
+                            if(id>1){
+                                mostrarCatalogo(id);
+                            }else{
+                                Toast.makeText(context,"Correo o contraseña invalida",Toast.LENGTH_LONG).show();
+                            }
+
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context,"Ocurrio un error, por favor intente de nuevo.",Toast.LENGTH_LONG).show();
+                    Log.d("Error _ servidor", error.toString());
+                }
+            }) {
+                @Override
+                protected Map <String, String> getParams(){
+                    Map<String, String> parametros = new HashMap<>();
+                    parametros.put("correo",email);
+                    parametros.put("contraseña",password);
+
+                    return parametros;
+                }
+            };
+            srqt.setRetryPolicy(new DefaultRetryPolicy(5000,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+            rqt.add(srqt);
+            /*try {
                 URL url = new URL("http://192.168.1.67:8080/usuario/validar");
 
                 JSONObject postParams = new JSONObject();
@@ -211,13 +268,11 @@ public class InicioSesion extends AppCompatActivity {
                 e.printStackTrace();
             }
             return "no conecto";
-        }
+        }*/
 
-        @Override
-        protected  void onPostExecute(String resultado){
-            Toast.makeText(getApplicationContext(), resultado,
-                    Toast.LENGTH_LONG).show();
-        }
+
+
+        return null;
+         }
     }
-
 }
