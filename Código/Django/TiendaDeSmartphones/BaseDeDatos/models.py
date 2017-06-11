@@ -1,6 +1,20 @@
 from __future__ import unicode_literals
 from django.db import models
 
+
+
+class Adquisicion(models.Model):
+    idAdquisicion = models.AutoField(primary_key=True)
+    producto = models.CharField(max_length=200)
+    proveedor = models.CharField(max_length=100)
+    precio = models.IntegerField()
+    cantidad = models.IntegerField()
+    fecha = models.DateField()
+
+    class Meta:
+        managed = False
+        db_table = 'adquisicion'
+
 class Reservacion(models.Model):
     idReservacion = models.AutoField(primary_key=True)
     idSmartphone = models.ForeignKey('Smartphone', models.DO_NOTHING, db_column='idSmartphone')

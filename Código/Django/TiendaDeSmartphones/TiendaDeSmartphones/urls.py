@@ -24,6 +24,7 @@ router.register(r'usuario', UsuarioLista)
 router.register(r'venta/lista', VentaLista)
 router.register(r'reservacion/lista', ReservacionLista)
 router.register(r'traspaso/lista', TraspasoLista)
+router.register(r'adquisicion/lista', AdquisicionLista)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -35,4 +36,9 @@ urlpatterns = [
     url(r'^traspasos/', traspasos),
     url(r'^smartphone/eliminar', eliminarSmartphone),
     url(r'^smartphone/guardar', agregarSmartphone),
+    url(r'^adquisiciones/',adquisiciones),
+    url(r'^adquisicion/guardar', agregarAdquisicion),
+    url(r'^adquisicion/eliminar', eliminarAdquisicion),
+    url(r'^reservacion/eliminar',eliminarReservacion),
+    url(r'^venta/registrar', registrarVenta)
 ]
