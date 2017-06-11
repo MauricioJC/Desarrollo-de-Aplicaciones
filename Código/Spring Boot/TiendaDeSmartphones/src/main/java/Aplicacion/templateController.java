@@ -39,4 +39,9 @@ public class templateController {
     public String obtenerPaginaDeReservaciones(){
         return "paginaReservaciones";
     }
+
+    @RequestMapping(value = "adquisiciones", method = RequestMethod.GET)
+    public String obtenerPaginaDeAdquisicion(){
+        return "paginaAdquisiciones";
+    }
 }

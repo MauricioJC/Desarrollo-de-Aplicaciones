@@ -40,14 +40,19 @@ public class ReservacionREST {
 
     @CrossOrigin
     @RequestMapping(value = "/reservacion/registrar", method = RequestMethod.POST)
-    public void registrarReservacion(@RequestParam("idSmartphone")Integer idSmartphone,
+    public boolean registrarReservacion(@RequestParam("idSmartphone")Integer idSmartphone,
                                      @RequestParam("idUsuario")Integer idUsuario){
-        SmartphoneEntity smartphone = this.smartphoneRepository.findByIdSmartphone(idSmartphone);
+        /*SmartphoneEntity smartphone = this.smartphoneRepository.findByIdSmartphone(idSmartphone);
         UsuarioEntity usuario = this.usuarioRepository.findOne(idUsuario);
         ReservacionEntity reservacion = new ReservacionEntity();
         reservacion.setSmartphone(smartphone);
         reservacion.setUsuario(usuario);
         reservacion.setFecha(new Date(new GregorianCalendar().getTimeInMillis()));
         this.reservacionRepository.save(reservacion);
+        */
+        System.out.println("::"+idSmartphone);
+        System.out.println("::"+idUsuario);
+
+        return true;
     }
 }
