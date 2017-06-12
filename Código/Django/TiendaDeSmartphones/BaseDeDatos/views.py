@@ -4,6 +4,8 @@ import datetime
 from BaseDeDatos.serializers import *
 from rest_framework import viewsets
 
+
+from django.http import JsonResponse
 ####################################################################
 def inicio(request):
     return render_to_response("paginaInicio.html")
@@ -86,6 +88,18 @@ def registrarVenta(request):
 
     return render_to_response("paginaVentas.html")
 
+
+def traspaso(request):
+    if request.POST:
+        smartphone = Smartphone.objects.get(idSmartphone=request.POST['id'])
+        smartphone.cantidad = smartphone.cantidad + 1
+        smartphone.save()
+        newTraspaso = Traspaso()
+        newTraspaso.idSmartphone = smartphone
+        newTraspaso.fecha = datetime.datetime.now()
+        newTraspaso.tipo = 'Recibido'
+        newTraspaso.save()
+    return render_to_response("paginaInicio.html")
 
 #####################################################################
 class AdquisicionLista(viewsets.ModelViewSet):

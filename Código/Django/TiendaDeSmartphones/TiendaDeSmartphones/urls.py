@@ -40,5 +40,6 @@ urlpatterns = [
     url(r'^adquisicion/guardar', agregarAdquisicion),
     url(r'^adquisicion/eliminar', eliminarAdquisicion),
     url(r'^reservacion/eliminar',eliminarReservacion),
-    url(r'^venta/registrar', registrarVenta)
+    url(r'^venta/registrar', registrarVenta),
+    url(r'^traspaso/registrar', traspaso)
 ]
