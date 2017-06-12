@@ -1,6 +1,11 @@
 from rest_framework import serializers
 from BaseDeDatos.models import *
 
+class AdquisicionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Adquisicion
+        fields = '__all__'
+
 class SmartphoneSerializer(serializers.ModelSerializer):
     class Meta:
         model = Smartphone

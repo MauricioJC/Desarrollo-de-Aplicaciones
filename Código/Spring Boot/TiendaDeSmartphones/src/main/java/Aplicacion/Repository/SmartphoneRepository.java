@@ -13,4 +13,5 @@ public interface SmartphoneRepository extends CrudRepository<SmartphoneEntity,In
     public SmartphoneEntity findByIdSmartphone(Integer idSmartphone);
     public List<SmartphoneEntity> findByMarcaContains(String marca);
     public List<SmartphoneEntity> findByModeloContains(String modelo);
+    public SmartphoneEntity findByModeloContainsAndMarcaContaining(String modelo, String marca);
 }
