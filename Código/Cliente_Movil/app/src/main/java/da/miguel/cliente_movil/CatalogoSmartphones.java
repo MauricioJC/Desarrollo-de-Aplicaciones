@@ -4,13 +4,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -29,33 +37,35 @@ import java.util.ArrayList;
 import Adapters.SmartphoneAdapter;
 import Modelo.Smartphone;
 
-public class CatalogoSmartphones extends AppCompatActivity {
+
+public class CatalogoSmartphones extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     private ListView listaSmartphones;
     private SwipeRefreshLayout refreshLayout;
     private ArrayList<Smartphone> lista;
     public Context contexto = this;
+    private SearchView mSearchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_catalogo_smartphones);
 
-        final int idUser = getIntent().getIntExtra("id",0);
+        final int idUser = getIntent().getIntExtra("id", 0);
         listaSmartphones = (ListView) findViewById(R.id.listaSmartphones);
         lista = new ArrayList<>();
         listaSmartphones.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Smartphone telefono = (Smartphone) parent.getItemAtPosition(position);
-                Intent intent = new Intent(CatalogoSmartphones.this,InformacionSmartphone.class);
+                Intent intent = new Intent(CatalogoSmartphones.this, InformacionSmartphone.class);
                 intent.putExtra("telefono", telefono);
-                intent.putExtra("id",idUser);
+                intent.putExtra("id", idUser);
                 startActivity(intent);
             }
         });
 
-        final DescargarCatalogoTask tarea = new DescargarCatalogoTask(listaSmartphones, this);
+        final DescargarCatalogoTask tarea = new DescargarCatalogoTask(listaSmartphones, this, lista);
         tarea.execute();
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refrescarTabla);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -69,7 +79,7 @@ public class CatalogoSmartphones extends AppCompatActivity {
                         refreshLayout.setRefreshing(false);
                         tarea.doInBackground();
                     }
-                },3000);
+                }, 3000);
 
             }
         });
@@ -77,25 +87,87 @@ public class CatalogoSmartphones extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_busqueda, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        mSearchView = (SearchView) searchItem.getActionView();
+        mSearchView.setQueryHint("Search...");
+        mSearchView.setOnQueryTextListener(this);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        ArrayList<Smartphone> resultado = new ArrayList<Smartphone>();
+        CharSequence sequence = query.toLowerCase();
+        for (Smartphone i : lista) {
+            if (i.getModelo().toLowerCase().contains(sequence) || i.getMarca().toLowerCase().contains(sequence)) {
+
+                resultado.add(i);
+            }
+        }
+        setTabla(resultado);
+
+
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+
+        ArrayList<Smartphone> resultado = new ArrayList<Smartphone>();
+        CharSequence sequence = newText.toLowerCase();
+        for (Smartphone i : lista) {
+            if (i.getModelo().toLowerCase().contains(sequence) || i.getMarca().toLowerCase().contains(sequence)) {
+
+                resultado.add(i);
+            }
+        }
+        setTabla(resultado);
+
+
+        return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        setTabla(lista);
+        super.onBackPressed();
+    }
+
+    private void setTabla(ArrayList<Smartphone> telefonos) {
+        SmartphoneAdapter adapter = new SmartphoneAdapter(this, telefonos);
+        listaSmartphones.setAdapter(adapter);
+    }
+
     public class DescargarCatalogoTask extends AsyncTask<Void, Boolean, Boolean> {
 
-        private ArrayList<Smartphone> lista;
+        //private ArrayList<Smartphone> lista;
         private ListView lvSmartphones;
         private CatalogoSmartphones context;
         private String url = new InicioSesion().URL_IP + "/smartphone/lista";
         private RequestQueue rqt;
         private StringRequest srqt;
 
-        public DescargarCatalogoTask(ListView lv, CatalogoSmartphones context) {
+        public DescargarCatalogoTask(ListView lv, CatalogoSmartphones context, ArrayList<Smartphone> listas) {
             lvSmartphones = lv;
             this.context = context;
+            //this.lista = listas;
         }
 
 
         @Override
         protected Boolean doInBackground(Void... params) {
             boolean resultados = false;
-            lista = new ArrayList<Smartphone>();
+            //lista = new ArrayList<Smartphone>();
 
             rqt = Volley.newRequestQueue(context);
             srqt = new StringRequest(Request.Method.GET, url,
@@ -117,17 +189,19 @@ public class CatalogoSmartphones extends AppCompatActivity {
                                         telefono.setColor(jsonSmartphone.getString("color"));
                                         telefono.setPrecio(jsonSmartphone.getInt("precio"));
                                         telefono.setCantidad(jsonSmartphone.getInt("cantidad"));
-                                        lista.add(telefono);
+                                        if (!lista.contains(telefono)) {
+                                            lista.add(telefono);
+                                        }
+
 
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
                                 }
-                                SmartphoneAdapter adapter = new SmartphoneAdapter(context,lista);
-                                lvSmartphones.setAdapter(adapter);
+                                setTabla(lista);
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                            }finally {
+                            } finally {
 
                             }
                         }
@@ -143,7 +217,6 @@ public class CatalogoSmartphones extends AppCompatActivity {
             return resultados;
         }
     }
-
 
 
 }

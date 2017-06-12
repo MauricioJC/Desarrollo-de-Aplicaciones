@@ -55,6 +55,7 @@ public class InicioSesion extends AppCompatActivity {
         setContentView(R.layout.activity_inicio_sesion);
         campoPassword = (EditText) findViewById(R.id.password);
         campoEmail = (AutoCompleteTextView) findViewById(R.id.email);
+        campoEmail.requestFocus();
         Button btnLoggin = (Button) findViewById(R.id.btnLoggin);
 
         btnLoggin.setOnClickListener(new View.OnClickListener(){

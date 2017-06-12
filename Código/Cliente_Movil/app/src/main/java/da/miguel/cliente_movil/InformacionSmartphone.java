@@ -40,22 +40,11 @@ public class InformacionSmartphone extends AppCompatActivity {
         seleccionado = getIntent().getParcelableExtra("telefono");
         idUser = getIntent().getIntExtra("id",0);
 
-        Button btnReservar = (Button) findViewById(R.id.btnReservar);
-        btnReservar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HacerReservacionTask reservacion = new HacerReservacionTask(InformacionSmartphone.this);
-                reservacion.execute();
-            }
-        });
-
         FloatingActionButton reserva = (FloatingActionButton) findViewById(R.id.btnReserva);
 
         reserva.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HacerReservacionTask reservacion = new HacerReservacionTask(InformacionSmartphone.this);
-                reservacion.execute();
                 final AlertDialog.Builder builder;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     builder = new AlertDialog.Builder(InformacionSmartphone.this, android.R.style.Theme_Material_Dialog_Alert);
@@ -73,7 +62,7 @@ public class InformacionSmartphone extends AppCompatActivity {
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                finish();
+
                             }
                         })
                         .setIcon(android.R.drawable.ic_dialog_alert)
@@ -104,7 +93,7 @@ public class InformacionSmartphone extends AppCompatActivity {
 
     public class HacerReservacionTask extends AsyncTask<Void,Void,Void>{
 
-        private String url = new InicioSesion().URL_IP+"reservacion/registrar";
+        private String url = new InicioSesion().URL_IP+"/reservacion/registrar";
         private RequestQueue rqt;
         private StringRequest srqt;
         private Context context;
@@ -138,6 +127,7 @@ public class InformacionSmartphone extends AppCompatActivity {
                     return parametros;
                 }
             };
+            rqt.add(srqt);
             return null;
         }
     }

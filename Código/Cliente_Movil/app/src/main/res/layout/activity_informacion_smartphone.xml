@@ -12,7 +12,7 @@
         android:id="@+id/TVModelo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="21dp"
         android:text="TextView"
         android:textColor="@android:color/holo_green_dark"
         android:textSize="28sp"
@@ -26,10 +26,11 @@
         android:text="TextView"
         android:textColor="@android:color/holo_green_light"
         android:textSize="18sp"
-        android:layout_alignTop="@+id/TVMarca"
-        android:layout_alignRight="@+id/TVMarca"
-        android:layout_alignEnd="@+id/TVMarca"
-        android:layout_marginTop="48dp" />
+        android:paddingRight="15dp"
+        android:layout_marginTop="13dp"
+        android:layout_below="@+id/TVMarca"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:id="@+id/TVColor"
@@ -38,10 +39,11 @@
         android:text="TextView"
         android:textColor="@android:color/black"
         android:textSize="15sp"
-        android:layout_marginTop="43dp"
+        android:layout_marginTop="17dp"
         android:layout_below="@+id/TVPrecio"
         android:layout_alignRight="@+id/TVPrecio"
-        android:layout_alignEnd="@+id/TVPrecio" />
+        android:layout_alignEnd="@+id/TVPrecio"
+        android:paddingRight="15dp"/>
 
     <TextView
         android:id="@+id/TVDescripcion"
@@ -50,8 +52,7 @@
         android:text="TextView"
         android:textSize="18sp"
         android:layout_above="@+id/btnReserva"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="24dp" />
+        android:layout_centerHorizontal="true" />
 
 
     <TextView
@@ -61,22 +62,12 @@
         android:text="TextView"
         android:textColor="@android:color/holo_red_dark"
         android:textSize="15sp"
-        android:layout_centerVertical="true"
-        android:layout_alignLeft="@+id/TVColor"
-        android:layout_alignStart="@+id/TVColor" />
-
-
-    <Button
-        android:id="@+id/btnReservar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Reservar"
-        tools:layout_constraintBottom_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1"
-        android:layout_alignBottom="@+id/imageView2"
+        android:paddingRight="15dp"
+        android:layout_below="@+id/TVColor"
         android:layout_alignLeft="@+id/TVPrecio"
-        android:layout_alignStart="@+id/TVPrecio" />
+        android:layout_alignStart="@+id/TVPrecio"
+        android:layout_marginTop="59dp" />
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/btnReserva"
@@ -93,25 +84,27 @@
         app:srcCompat="@drawable/ic_action_name" />
 
     <ImageView
+
         android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="210dp"
+        android:layout_height="280dp"
         app:srcCompat="@drawable/celular"
-        android:layout_alignTop="@+id/TVMarca"
-        android:layout_toStartOf="@+id/TVMarca"
-        android:layout_alignRight="@+id/TVDescripcion"
-        android:layout_alignEnd="@+id/TVDescripcion" />
+        android:layout_marginTop="16dp"
+        android:layout_below="@+id/TVModelo"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="13dp"
+        android:layout_marginStart="13dp" />
 
     <TextView
         android:id="@+id/TVMarca"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="21dp"
         android:text="TextView"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="22sp"
-        android:layout_below="@+id/TVModelo"
-        android:layout_toRightOf="@+id/TVModelo"
-        android:layout_toEndOf="@+id/TVModelo" />
-
+        android:paddingRight="20dp"
+        android:layout_alignTop="@+id/imageView2"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>
